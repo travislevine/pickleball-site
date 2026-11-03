@@ -28,5 +28,6 @@ AGENTS.md
 
 # large media and private notes
 *.mp4
+!public/videos/racket-hovering.mp4
 /master_prompt.txt
 .master_prompt.txt
