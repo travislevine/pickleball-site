@@ -10,13 +10,17 @@ function bad(message: string) {
   return Response.json({ error: message }, { status: 400 });
 }
 
+/**
+ * The address the customer is shopping on, so Stripe returns them to the same site
+ * (works on the live domain, Vercel previews and localhost alike).
+ */
 function baseUrl(req: Request): string {
-  const fromEnv = process.env.NEXT_PUBLIC_SITE_URL;
-  if (fromEnv) return fromEnv.replace(/\/$/, "");
-  // Fallback for Vercel preview deployments.
   const host = req.headers.get("x-forwarded-host") ?? req.headers.get("host");
-  const proto = req.headers.get("x-forwarded-proto") ?? "https";
-  return host ? `${proto}://${host}` : new URL(req.url).origin;
+  if (host) {
+    const proto = req.headers.get("x-forwarded-proto") ?? new URL(req.url).protocol.replace(":", "");
+    return `${proto}://${host}`;
+  }
+  return (process.env.NEXT_PUBLIC_SITE_URL || new URL(req.url).origin).replace(/\/$/, "");
 }
 
 export async function POST(req: Request) {
