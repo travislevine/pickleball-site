@@ -61,7 +61,6 @@ export async function POST(req: Request) {
     price_data: {
       currency: "aud",
       unit_amount: cents(l.unitPrice),
-      tax_behavior: "inclusive",
       product_data: {
         name: l.title,
         ...(publicImages ? { images: [`${base}${l.image}`] } : {}),
@@ -85,26 +84,17 @@ export async function POST(req: Request) {
             type: "fixed_amount",
             display_name: "Standard Shipping (Australia Post)",
             fixed_amount: { amount: cents(standardShippingFee(subtotal)), currency: "aud" },
-            tax_behavior: "inclusive",
             delivery_estimate: {
-              minimum: { unit: "business_day", value: 3 },
-              maximum: { unit: "business_day", value: 8 },
-            },
-          },
-        },
-        {
-          shipping_rate_data: {
-            type: "fixed_amount",
-            display_name: "Express Shipping (Australia Post)",
-            fixed_amount: { amount: cents(site.expressShippingFee), currency: "aud" },
-            tax_behavior: "inclusive",
-            delivery_estimate: {
-              minimum: { unit: "business_day", value: 1 },
-              maximum: { unit: "business_day", value: 3 },
+              maximum: { unit: "business_day", value: site.deliveryDays },
             },
           },
         },
       ],
+      custom_text: {
+        shipping_address: {
+          message: `Paddles are sourced to order and dispatched within ${site.sourcingDays} business days. Australia Post standard delivery then takes up to ${site.deliveryDays} business days.`,
+        },
+      },
       allow_promotion_codes: true,
       billing_address_collection: "auto",
       success_url: `${base}/success?session_id={CHECKOUT_SESSION_ID}`,

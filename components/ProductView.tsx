@@ -3,6 +3,7 @@
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { getCompareAtPrice, getImages, getPrice, type Product } from "@/data/products";
+import { freeShippingLine, leadTimeLine } from "@/lib/shipping";
 import { BuyButtons } from "./BuyButtons";
 import { ImageGallery } from "./ImageGallery";
 import { QuantityStepper } from "./QuantityStepper";
@@ -53,7 +54,7 @@ export function ProductView({ product, variantId }: { product: Product; variantI
 
         <div>
           <PriceTag price={price} compareAt={compareAt} large />
-          <p className="mt-1 text-xs text-muted">Prices in AUD, GST included.</p>
+          <p className="mt-1 text-xs text-muted">Prices in AUD.</p>
         </div>
 
         {product.variants && product.variants.length > 0 && (
@@ -93,7 +94,10 @@ export function ProductView({ product, variantId }: { product: Product; variantI
         </div>
 
         <BuyButtons item={{ productId: product.id, variantId: variant?.id, quantity }} />
-        <p className="text-sm text-frozen">Free standard shipping Australia-wide on orders $150+.</p>
+        <div className="space-y-1 text-sm">
+          <p className="text-frozen">{freeShippingLine}.</p>
+          <p className="text-muted">{leadTimeLine}</p>
+        </div>
       </div>
     </div>
   );

@@ -75,7 +75,7 @@ async function OrderDetails({ searchParams }: { searchParams: PageProps<"/succes
       </ul>
       {total !== null && (
         <div className="flex justify-between font-bold">
-          <span>Total paid (incl. shipping, GST included)</span>
+          <span>Total paid (incl. shipping)</span>
           <span className="tabular-nums">{formatPrice(total)}</span>
         </div>
       )}
@@ -88,7 +88,7 @@ export default function SuccessPage({ searchParams }: PageProps<"/success">) {
     <div className="mx-auto max-w-2xl px-4 py-20 text-center sm:px-6">
       <CheckCircle2 className="mx-auto mb-6 size-14 text-frozen" aria-hidden="true" />
       <h1 className="display mb-4 text-4xl sm:text-5xl">Thanks for your order</h1>
-      <p className="mb-10 text-lg text-muted">Your paddle is on its way to being packed.</p>
+      <p className="mb-10 text-lg text-muted">Your paddle is sourced to order and will be dispatched within {site.sourcingDays} business days.</p>
       <Suspense fallback={<p className="text-muted">Loading your order…</p>}>
         <OrderDetails searchParams={searchParams} />
       </Suspense>

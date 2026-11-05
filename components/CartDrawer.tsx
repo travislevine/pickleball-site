@@ -6,7 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef } from "react";
 import { formatPrice } from "@/lib/format";
-import { amountToFreeShipping } from "@/lib/shipping";
+import { amountToFreeShipping, freeShippingFrom, leadTimeLine } from "@/lib/shipping";
 import { useCart } from "./CartProvider";
 import { QuantityStepper } from "./QuantityStepper";
 import { useCheckout } from "./useCheckout";
@@ -155,12 +155,13 @@ export function CartDrawer() {
                     <span className="text-muted">Subtotal</span>
                     <span className="text-xl font-bold tabular-nums">{formatPrice(subtotal)}</span>
                   </div>
-                  <p className="text-xs text-muted">Prices in AUD, GST included.</p>
+                  <p className="text-xs text-muted">Prices in AUD.</p>
                   <p className="text-sm text-frozen">
                     {toFree === 0
-                      ? "Free standard shipping on orders $150+."
+                      ? `Free standard shipping on orders ${freeShippingFrom}.`
                       : `Add ${formatPrice(toFree)} for free standard shipping.`}
                   </p>
+                  <p className="text-xs text-muted">{leadTimeLine}</p>
                   <button
                     type="button"
                     className="btn btn-primary w-full py-3 text-base"

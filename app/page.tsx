@@ -21,7 +21,7 @@ export default function HomePage() {
               Shop Paddles
             </h2>
           </div>
-          <p className="text-sm text-muted">Prices in AUD, GST included.</p>
+          <p className="text-sm text-muted">Prices in AUD.</p>
         </div>
         <ProductGrid products={products} cards={cards} />
       </section>

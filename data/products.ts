@@ -3,7 +3,7 @@
 // Descriptions and specs are taken from the official Luzz store
 // (luzzpickleball.com, Shopify catalog). Images live in public/images/products/.
 //
-// Prices are in AUD, GST inclusive. Edit `price` / `compareAtPrice` freely.
+// Prices are in AUD. Edit `price` / `compareAtPrice` freely.
 // The checkout API must look prices up here by product + variant id and never
 // trust a price sent from the browser.
 
@@ -29,7 +29,7 @@ export interface ProductSpecs {
 export interface ProductVariant {
   id: string;
   name: string;
-  /** Overrides the product price when set (AUD, GST inclusive). */
+  /** Overrides the product price when set (AUD). */
   price?: number;
   compareAtPrice?: number;
   images: string[];
@@ -43,9 +43,9 @@ export interface Product {
   category: ProductCategory;
   coreType: CoreType;
   skillLevel: string;
-  /** AUD, GST inclusive. */
+  /** AUD. */
   price: number;
-  /** Optional "was" price, shown struck through. AUD, GST inclusive. */
+  /** Optional "was" price, shown struck through. AUD. */
   compareAtPrice?: number;
   /** Label for the variant picker, e.g. "Edition" or "Colourway". Only used when variants exist. */
   variantLabel?: string;
@@ -350,6 +350,7 @@ export const products: Product[] = [
       gripCircumference: "4.13 in",
       swingWeight: "121 ± 3",
       twistWeight: "6.2 ± 0.1",
+      certification: "UPA-A & USAP",
     },
     sourceUrl:
       "https://luzzpickleball.com/products/luzzpickleball-candy-cannon-paddle-t700-carbon-friction-surface-thermoformed",

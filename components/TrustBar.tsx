@@ -1,8 +1,9 @@
+import { freeShippingLine } from "@/lib/shipping";
 import { BadgeCheck, Lock, ShieldCheck, Truck } from "lucide-react";
 
 const items = [
   { icon: BadgeCheck, text: "Genuine Luzz paddles" },
-  { icon: Truck, text: "Free standard shipping Australia-wide on orders $150+" },
+  { icon: Truck, text: freeShippingLine },
   { icon: Lock, text: "Secure checkout by Stripe" },
   { icon: ShieldCheck, text: "USAP & UPA certified models" },
 ];
