@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({ variable: "--font-mono", subsets: ["latin"] });
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl()),
-  title: { default: `${site.name} | Genuine Luzz Paddles`, template: `%s | ${site.name}` },
+  title: { default: `${site.name} | Genuine Luzz Paddles in Australia`, template: `%s | ${site.name}` },
   description: site.description,
   applicationName: site.name,
   openGraph: {

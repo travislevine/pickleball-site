@@ -6,7 +6,7 @@ import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Contact",
-  description: "Questions about a paddle or an order? Get in touch with Luzz Pickleball Australia.",
+  description: "Questions about a paddle or an order? Get in touch with Pickleball Sales.",
 };
 
 export default function ContactPage() {

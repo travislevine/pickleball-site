@@ -8,10 +8,8 @@ import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "FAQ",
-  description: "Answers about choosing a Luzz paddle, certification, AUD pricing, shipping, payment and returns.",
+  description: "Answers about choosing a Luzz paddle, certification, shipping times, payment and returns.",
 };
-
-const todo = (text: string) => <span className="todo">[TODO: {text}]</span>;
 
 const items = [
   {
@@ -47,33 +45,35 @@ const items = [
         {products.map((p) => (
           <li key={p.id}>
             <strong>{p.name}:</strong>{" "}
-            {p.specs.certification ? `${p.specs.certification} certified.` : todo("certification not listed, confirm")}
+            {p.specs.certification ? `${p.specs.certification} certified.` : "Certification not listed by Luzz."}
           </li>
         ))}
       </ul>
     ),
   },
   {
-    q: "Are prices in AUD, and do they include GST?",
-    a: <p>Yes. All prices are in Australian dollars and include GST. There is nothing extra to pay at checkout apart from shipping, if any.</p>,
-  },
-  {
     q: "How much is shipping and how long does it take?",
     a: (
-      <p>
-        Standard shipping via Australia Post is free on orders of {formatPrice(site.freeShippingThreshold)} or more, which
-        covers every paddle we sell. Express shipping is a flat {formatPrice(site.expressShippingFee)}. Orders are
-        dispatched within {todo("dispatch time, e.g. 1–2 business days")}. See{" "}
-        <Link href="/shipping-returns">Shipping &amp; Returns</Link> for details.
-      </p>
+      <>
+        <p>
+          Standard shipping via Australia Post is free on orders of {formatPrice(site.freeShippingThreshold)} or more,
+          otherwise {formatPrice(site.standardShippingFee)}.
+        </p>
+        <p>
+          All paddles are sourced to order directly from Luzz, so please allow up to {site.sourcingDays} business days
+          for your order to be dispatched (Monday to Friday, from {site.location}). Delivery then takes up to{" "}
+          {site.deliveryDays} business days. See <Link href="/shipping-returns">Shipping &amp; Returns</Link> for details.
+        </p>
+      </>
     ),
   },
   {
     q: "What payment methods do you accept?",
     a: (
       <p>
-        Checkout is handled securely by Stripe. You can pay by card, plus Apple Pay or Google Pay on supported devices.{" "}
-        {todo("list any extra methods enabled in Stripe, e.g. Afterpay or Zip")}
+        Checkout is handled securely by Stripe. You can pay by Visa, Mastercard or American Express, Apple Pay, Google
+        Pay or Link, or spread the cost with Klarna or Zip. Options shown at checkout can depend on your device and
+        order total. All prices are in Australian dollars.
       </p>
     ),
   },
@@ -81,20 +81,17 @@ const items = [
     q: "What is your returns policy?",
     a: (
       <p>
-        Your rights under the Australian Consumer Law always apply. Change-of-mind returns are accepted{" "}
-        {todo("e.g. within 30 days, unused, in original packaging")}. Full details are on our{" "}
-        <Link href="/shipping-returns">Shipping &amp; Returns</Link> page. Warranty claims are handled{" "}
-        {todo("confirm how warranty claims are handled")}.
+        Your rights under the Australian Consumer Law always apply. We accept change-of-mind returns within{" "}
+        {site.returnsDays} days of delivery if the paddle is unused and in its original packaging, with return postage
+        at your cost. For a faulty paddle, contact us first. Manufacturer warranty claims are processed through Luzz in
+        California, and we will help you arrange this. Full details are on our{" "}
+        <Link href="/shipping-returns">Shipping &amp; Returns</Link> page.
       </p>
     ),
   },
   {
     q: "Are these genuine Luzz paddles?",
-    a: (
-      <p>
-        Yes. We only sell genuine Luzz Pickleball products. {site.disclaimer}
-      </p>
-    ),
+    a: <p>Yes. We only sell genuine Luzz Pickleball products. {site.disclaimer}</p>,
   },
 ];
 

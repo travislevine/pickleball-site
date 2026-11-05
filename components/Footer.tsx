@@ -4,8 +4,13 @@ import { navLinks, site } from "@/lib/site";
 import { CopyrightYear } from "./CopyrightYear";
 import { Wordmark } from "./Wordmark";
 
-// TODO owner: only list payment methods you have switched on in the Stripe dashboard.
-const paymentMethods = ["Visa", "Mastercard", "Amex", "Apple Pay", "Google Pay"];
+// Keep in step with the payment methods switched on in the Stripe dashboard.
+const paymentMethods = ["Visa", "Mastercard", "Amex", "Apple Pay", "Google Pay", "Link", "Klarna", "Zip"];
+
+const policyLinks = [
+  { href: "/shipping-returns", label: "Shipping & Returns" },
+  { href: "/privacy", label: "Privacy Policy" },
+];
 
 export function Footer() {
   return (
@@ -15,7 +20,7 @@ export function Footer() {
         <div className="space-y-4">
           <Wordmark />
           <p className="max-w-sm text-sm text-muted">
-            Genuine Luzz pickleball paddles, shipped Australia-wide. Prices in AUD, GST included.
+            Genuine Luzz pickleball paddles, shipped Australia-wide from the Sunshine Coast, QLD. Prices in AUD.
           </p>
           <a href={`mailto:${site.email}`} className="link text-sm">
             {site.email}
@@ -25,7 +30,7 @@ export function Footer() {
         <nav aria-label="Footer">
           <h2 className="mb-3 text-xs font-semibold uppercase tracking-widest text-muted">Store</h2>
           <ul className="space-y-2 text-sm">
-            {navLinks.map((l) => (
+            {[...navLinks.filter((l) => l.href !== "/shipping-returns"), ...policyLinks].map((l) => (
               <li key={l.href}>
                 <Link href={l.href} className="hover:text-frozen">
                   {l.label}

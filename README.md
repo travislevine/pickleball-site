@@ -1,4 +1,4 @@
-# Luzz Pickleball Australia
+# Pickleball Sales
 
 Storefront for genuine Luzz pickleball paddles in Australia. Built with Next.js (App Router), TypeScript, Tailwind CSS, Framer Motion and Stripe Checkout. No database: products and prices live in `data/products.ts`.
 
@@ -21,9 +21,9 @@ The site runs without Stripe keys: checkout buttons show a "Checkout isn't conne
 1. Create a Stripe account with Australia as the country and AUD as the currency.
 2. In the dashboard, go to **Developers → API keys** and copy the test secret key (`sk_test_...`) into `STRIPE_SECRET_KEY` in `.env.local`.
 3. Test with card `4242 4242 4242 4242`, any future expiry date and any CVC.
-4. Optional: switch on Apple Pay, Google Pay, Afterpay or Zip under **Settings → Payment methods**. Checkout shows whatever is enabled there.
+4. Optional: switch on Apple Pay, Google Pay, Link, Klarna or Zip under **Settings → Payment methods**. Checkout shows whatever is enabled there.
 
-Prices already include GST, so Stripe Tax is not used. Promotion codes created in the dashboard can be entered at checkout.
+The business is not registered for GST, so no tax is added and Stripe Tax is not used. Promotion codes created in the dashboard can be entered at checkout.
 
 ### Webhooks locally
 
@@ -42,10 +42,10 @@ Copy the `whsec_...` secret it prints into `STRIPE_WEBHOOK_SECRET`. Completed or
 
 ## Editing the store
 
-- **Products and prices:** `data/products.ts`. Prices are AUD, GST included. Set `compareAtPrice` to show a "was" price and Sale badge.
+- **Products and prices:** `data/products.ts`. Prices are in AUD. Set `compareAtPrice` to show a "was" price and Sale badge.
 - **Images:** `public/images/products/<product>/<variant>-NN.jpg` (square JPGs), referenced from `data/products.ts`.
-- **Store settings:** `lib/site.ts` holds the email, ABN, shipping fees, free-shipping threshold and footer disclaimer.
-- **Policies:** search the project for `[TODO` to find text you need to confirm (dispatch times, returns window, warranty).
+- **Store settings:** `lib/site.ts` holds the business name, email, ABN, shipping fee, free-shipping threshold, sourcing and delivery times, returns window and footer disclaimer. The policy pages read from it.
+- **Policies:** `app/shipping-returns/page.tsx`, `app/privacy/page.tsx` and `app/faq/page.tsx`.
 
 ## Scripts
 

@@ -5,6 +5,7 @@ import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useSyncExternalStore } from "react";
 import { preload } from "react-dom";
+import { freeShippingFrom } from "@/lib/shipping";
 
 const MAX = 16; // degrees
 const SPRING = { stiffness: 140, damping: 18, mass: 0.6 };
@@ -173,7 +174,7 @@ export function HeroTilt() {
             <span className="gradient-text">Australian Courts.</span>
           </h1>
           <p className="mt-6 max-w-md text-lg text-muted">
-            Thermoformed and MPP foam paddles from Luzz, shipped Australia-wide. Free standard shipping on orders $150+.
+            Thermoformed and MPP foam paddles from Luzz, shipped Australia-wide. Free standard shipping on orders {freeShippingFrom}.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link href="/#shop" className="btn btn-primary px-6 py-3 text-base">

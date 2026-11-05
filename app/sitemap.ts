@@ -4,7 +4,7 @@ import { siteUrl } from "@/lib/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = siteUrl();
-  const pages = ["", "/technology", "/faq", "/shipping-returns", "/contact"];
+  const pages = ["", "/technology", "/faq", "/shipping-returns", "/contact", "/privacy"];
   return [
     ...pages.map((p) => ({ url: `${base}${p}` })),
     ...products.map((p) => ({ url: `${base}/paddles/${p.slug}` })),

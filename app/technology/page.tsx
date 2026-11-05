@@ -79,7 +79,7 @@ export default function TechnologyPage() {
         title="Built for Australian courts"
         intro={
           <p>
-            Luzz Pickleball Australia is an independent Australian storefront for genuine Luzz paddles. We stock two
+            Pickleball Sales is an independent Australian business, based on the Sunshine Coast, selling genuine Luzz paddles. We stock two
             constructions, and each plays very differently. Here&apos;s how they compare.
           </p>
         }
