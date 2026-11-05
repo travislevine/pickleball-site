@@ -1,54 +1,52 @@
 # Pickleball Sales
 
-Storefront for genuine Luzz pickleball paddles in Australia. Built with Next.js (App Router), TypeScript, Tailwind CSS, Framer Motion and Stripe Checkout. No database: products and prices live in `data/products.ts`.
+Online store for **Pickleball Sales**, a Sunshine Coast business selling genuine Luzz pickleball paddles Australia-wide.
 
-## Local setup
+**Live site:** https://pickleball-site-pi.vercel.app
+
+## Why it was built
+
+Pickleball Sales sources paddles to order and needed a way to sell online: a storefront that presents the range well on phones and desktops, takes payment securely, and explains shipping and returns clearly. This was built as a client project to get the business selling and accepting payments.
+
+## What it does
+
+- **Shop:** six paddles with category filters, a spec comparison table and a page for each paddle, with a colour/edition picker that swaps photos and price.
+- **Cart:** saved in the browser, with quantity controls and a free-shipping progress message.
+- **Checkout:** Stripe Checkout in AUD with Australian shipping, card, Apple Pay, Google Pay, Link, Klarna and Zip.
+- **Order handling:** a Stripe webhook confirms each paid order, and the thank-you page shows the order reference.
+- **Store pages:** paddle technology guide, FAQ, shipping & returns, privacy policy and contact form.
+- **Hero:** a product video that tilts in 3D toward the cursor (and floats gently on phones).
+
+## How it was built
+
+- **Next.js 16** (App Router) with **TypeScript**, **Tailwind CSS** and **Framer Motion**, hosted on **Vercel**.
+- No database: the catalogue and prices live in one file (`data/products.ts`), and store settings (shipping fee, free-shipping threshold, lead times, contact details) in `lib/site.ts`.
+- Prices are always looked up on the server at checkout, so a customer can't change what they pay from the browser.
+- Static pages for speed, with structured product data and a sitemap for search engines.
+
+## Payments with Stripe
+
+I set up the business's Stripe account and connected it to the store to give Pickleball Sales a direct way to take payments and receive payouts:
+
+- Stripe Checkout handles payment, shipping address and receipts, so no card details touch the site.
+- Shipping is calculated by order value (free over $199), limited to Australia, with the sourcing lead time shown at checkout.
+- Card, wallet and buy-now-pay-later methods are switched on from the Stripe dashboard with no code changes.
+- The full purchase flow (checkout, webhook and order confirmation) has been tested end to end in Stripe's test mode. Switching to live payments is the final step.
+
+## Running locally
 
 ```bash
 npm install
-cp .env.example .env.local   # then fill in your Stripe keys
+cp .env.example .env.local   # add Stripe test keys (optional)
 npm run dev
 ```
 
-Open http://localhost:3000. To try it on your phone, run `npm run dev -- -H 0.0.0.0` and open `http://<your-computer's-local-IP>:3000` on a phone on the same Wi-Fi.
+Without Stripe keys the store still runs; checkout shows a "not connected yet" message. Environment variables:
 
-The hero video (`public/videos/racket-hovering.mp4`) is not in git (`*.mp4` is ignored). Copy it into `public/videos/` on each machine, or remove `*.mp4` from `.gitignore` to commit it. Without it the hero shows the poster image.
+| Variable | Purpose |
+| --- | --- |
+| `STRIPE_SECRET_KEY` | Stripe secret key (`sk_test_…` or `sk_live_…`) |
+| `STRIPE_WEBHOOK_SECRET` | Signing secret for `/api/webhooks/stripe` |
+| `NEXT_PUBLIC_SITE_URL` | Public site address, used for metadata and the sitemap |
 
-The site runs without Stripe keys: checkout buttons show a "Checkout isn't connected yet" message instead.
-
-## Stripe setup
-
-1. Create a Stripe account with Australia as the country and AUD as the currency.
-2. In the dashboard, go to **Developers → API keys** and copy the test secret key (`sk_test_...`) into `STRIPE_SECRET_KEY` in `.env.local`.
-3. Test with card `4242 4242 4242 4242`, any future expiry date and any CVC.
-4. Optional: switch on Apple Pay, Google Pay, Link, Klarna or Zip under **Settings → Payment methods**. Checkout shows whatever is enabled there.
-
-The business is not registered for GST, so no tax is added and Stripe Tax is not used. Promotion codes created in the dashboard can be entered at checkout.
-
-### Webhooks locally
-
-```bash
-stripe listen --forward-to localhost:3000/api/webhooks/stripe
-```
-
-Copy the `whsec_...` secret it prints into `STRIPE_WEBHOOK_SECRET`. Completed orders are logged to the server console (see the TODO in `app/api/webhooks/stripe/route.ts` for fulfilment emails).
-
-## Deploy to Vercel
-
-1. Import the GitHub repo in Vercel.
-2. Add the environment variables `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET` and `NEXT_PUBLIC_SITE_URL` (your live URL, e.g. `https://example.com.au`).
-3. In Stripe, add a webhook endpoint at `https://<your-domain>/api/webhooks/stripe` for the `checkout.session.completed` event, and use its signing secret as `STRIPE_WEBHOOK_SECRET`.
-4. When ready to take real orders, swap in your live keys (`sk_live_...`) and the live webhook secret.
-
-## Editing the store
-
-- **Products and prices:** `data/products.ts`. Prices are in AUD. Set `compareAtPrice` to show a "was" price and Sale badge.
-- **Images:** `public/images/products/<product>/<variant>-NN.jpg` (square JPGs), referenced from `data/products.ts`.
-- **Store settings:** `lib/site.ts` holds the business name, email, ABN, shipping fee, free-shipping threshold, sourcing and delivery times, returns window and footer disclaimer. The policy pages read from it.
-- **Policies:** `app/shipping-returns/page.tsx`, `app/privacy/page.tsx` and `app/faq/page.tsx`.
-
-## Scripts
-
-- `npm run dev`: start the development server
-- `npm run build`: production build
-- `npm run lint`: lint
+Keys are only ever set in `.env.local` (git-ignored) or the Vercel dashboard, never committed.
